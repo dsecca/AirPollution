@@ -14,11 +14,11 @@ complete <- function(directory, id = 1:332) {
       filename <- paste("00", id_num, ".csv", sep="")
     }
     # ID number is double digit
-    else if (id_num > 10 & id_num < 100) {
+    else if (id_num >= 10 & id_num < 100) {
       filename <- paste("0", id_num, ".csv", sep="")
     }
     # ID number is triple digit
-    else if (id_num > 100) {
+    else if (id_num >= 100) {
       filename <- paste(id_num, ".csv", sep="")
     }
     
@@ -43,6 +43,12 @@ complete <- function(directory, id = 1:332) {
     complete_observations <- rbind(complete_observations, complete_cases_row)
     
     index <- index + 1
+    
+    # Clear the complete_cases_row data frame
+    complete_cases_row <- data.frame(
+      id = integer(),
+      nobs = integer()
+    )
     
   }
   

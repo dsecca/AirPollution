@@ -11,11 +11,11 @@ pollutantmean <- function(directory, pollutant, id = 1:332){
       filename <- paste("00", id_num, ".csv", sep="")
     }
     # ID number is double digit
-    else if (id_num > 10 & id_num < 100) {
+    else if (id_num >= 10 & id_num < 100) {
       filename <- paste("0", id_num, ".csv", sep="")
     }
     # ID number is triple digit
-    else if (id_num > 100) {
+    else if (id_num >= 100) {
       filename <- paste(id_num, ".csv", sep="")
     }
     
@@ -29,17 +29,19 @@ pollutantmean <- function(directory, pollutant, id = 1:332){
     na_in_data <- is.na(pollutant_data)
     pollutant_data <- pollutant_data[!na_in_data]
     
-    # Calculate of specific monitor
-    pollutant_mean <- mean(pollutant_data)
-    
-    #Append mean to the total averages list
-    total_averages[index] <- pollutant_mean
-    index <- index + 1
+    if (length(pollutant_data) > 0) {
+      # Calculate of specific monitor
+      pollutant_mean <- mean(pollutant_data)
+      
+      #Append mean to the total averages list
+      total_averages[index] <- pollutant_mean
+      index <- index + 1 
+    }
     
   }
   
   # Compute mean of all desired monitors
-  mean <- mean(as.numeric(total_averages))
+  mean <- mean(as.numeric(total_averages), na.rm = TRUE)
   mean
   
 }
